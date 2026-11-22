@@ -1,0 +1,20 @@
+{
+  "name": "nova-storefront",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "photos": "node scripts/fetch-photos.mjs",
+    "photos:prepare": "node scripts/run-python.mjs scripts/prepare-photos.py",
+    "videos:prepare": "node scripts/run-python.mjs scripts/prepare-videos.py"
+  },
+  "dependencies": {
+    "gsap": "^3.14.2"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
+  }
+}

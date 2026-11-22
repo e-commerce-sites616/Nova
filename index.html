@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090a0c" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="NOVA. Technology, reimagined. A premium technology showroom for considered audio, keyboards, mice, controllers and desk objects." />
+    <title>NOVA — Technology, Reimagined</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Critical styles: the very first paint is plain obsidian, never unstyled text. -->
+    <style>
+      html { background: #090a0c; }
+      body { margin: 0; background: #090a0c; color: #f4f2ed; }
+      body.booting > *:not(#boot) { visibility: hidden; }
+      #boot { position: fixed; inset: 0; z-index: 200; background: #090a0c; transition: opacity .4s ease; }
+      #boot.done { opacity: 0; pointer-events: none; }
+      .skip-link { position: fixed; left: 12px; top: -60px; }
+    </style>
+    <link rel="stylesheet" href="/src/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="booting">
+    <div id="boot" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="announcement"><span>Complimentary shipping on orders over $250</span><span class="announcement-right">A more considered way to tech.</span></div>
+    <div id="header-root"></div>
+    <main id="main" tabindex="-1"><div id="app"></div></main>
+    <div id="footer-root"></div>
+    <div id="overlays-root"></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <noscript><style>body.booting > * { visibility: visible !important; } #boot { display: none; }</style><p style="padding:2rem;text-align:center">NOVA needs JavaScript to run this demonstration storefront.</p></noscript>
+    <script>setTimeout(function () { document.body.classList.remove("booting"); }, 6000);</script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
