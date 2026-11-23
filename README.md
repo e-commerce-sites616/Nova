@@ -1,5 +1,7 @@
 # NOVA — Technology, Reimagined.
 
+NOVA is a MKSTUDIOS brand.
+
 A premium technology storefront: dark luxury, cinematic motion, studio photography and scroll-driven film.
 Front-end only (Vite + vanilla JS + GSAP). No backend; checkout is a demonstration and no payment is processed.
 

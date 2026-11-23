@@ -8,6 +8,7 @@ import { openPanel, bumpBag } from '../components/chrome.js';
 import { filmSection, mountFilm } from '../components/film.js';
 import { gsap, EASE, DUR, reducedMotion } from '../motion/index.js';
 import { $, $$, esc, money, heart, toast } from '../utils.js';
+import { icon } from '../components/icons.js';
 
 const ANGLES = [['front', 'Front'], ['tilt', 'Profile'], ['detail', 'Detail']];
 const PHOTO_LABELS = ['Studio', 'Detail', 'Close-up'];
@@ -40,8 +41,8 @@ export function product(id, params) {
     <div class="pdp-grid">
       <div class="pdp-gallery" id="gallery" tabindex="0" aria-label="Product gallery. Use left and right arrow keys to change angle.">
         <div class="pg-stage" id="pg-stage" aria-live="polite"></div>
-        <button class="pg-nav prev" type="button" data-nav="-1" aria-label="Previous angle">←</button>
-        <button class="pg-nav next" type="button" data-nav="1" aria-label="Next angle">→</button>
+        <button class="pg-nav prev" type="button" data-nav="-1" aria-label="Previous angle">${icon('arrowLeft')}</button>
+        <button class="pg-nav next" type="button" data-nav="1" aria-label="Next angle">${icon('arrowRight')}</button>
         <div class="pg-thumbs" id="pg-thumbs" role="group" aria-label="Product angles"></div>
       </div>
       <div class="pdp-info">
@@ -52,15 +53,15 @@ export function product(id, params) {
         <p class="pdp-desc">${esc(p.desc)}</p>
         ${groups}
         <div class="buy-row">
-          <div class="qty big" role="group" aria-label="Quantity"><button type="button" data-q="-1" aria-label="Decrease quantity">−</button><span id="qty-val" aria-live="polite">1</span><button type="button" data-q="1" aria-label="Increase quantity">+</button></div>
-          <button class="btn grow" type="button" id="add-btn"><span id="add-label">${p.status === 'preorder' ? 'Pre-order' : 'Add to bag'} — <i id="line-total">${money(p.price)}</i></span></button>
+          <div class="qty big" role="group" aria-label="Quantity"><button type="button" data-q="-1" aria-label="Decrease quantity">${icon('minus')}</button><span id="qty-val" aria-live="polite">1</span><button type="button" data-q="1" aria-label="Increase quantity">${icon('plus')}</button></div>
+          <button class="btn grow" type="button" id="add-btn">${icon('bag')}<span id="add-label">${p.status === 'preorder' ? 'Pre-order' : 'Add to bag'} — <i id="line-total">${money(p.price)}</i></span></button>
           <button class="wish solo" type="button" data-wish="${p.id}" aria-pressed="${wishlist.has(p.id)}" aria-label="${wishlist.has(p.id) ? 'Remove from' : 'Add to'} wishlist: ${esc(p.name)}">${heart}</button>
         </div>
-        <ul class="assure"><li>Complimentary shipping over $250</li><li>30-day returns</li><li>2-year warranty</li></ul>
+        <ul class="assure"><li>${icon('truck')}Complimentary shipping over $250</li><li>${icon('rotate')}30-day returns</li><li>${icon('shield')}2-year warranty</li></ul>
         <div class="details">
-          <details open><summary>Specifications</summary><dl class="specs">${p.specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></details>
-          <details><summary>Shipping and returns</summary><p>Stocked items dispatch in 1–2 working days. Return any unused object within 30 days for a full refund.</p></details>
-          <details><summary>Warranty and repair</summary><p>Every NOVA object carries a two-year warranty. Parts are replaceable and repairs are handled by our studio.</p></details>
+          <details open><summary><span class="sum-t">Specifications</span>${icon('chevronDown', 'chev')}</summary><dl class="specs">${p.specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></details>
+          <details><summary><span class="sum-t">${icon('truck')}Shipping and returns</span>${icon('chevronDown', 'chev')}</summary><p>Stocked items dispatch in 1–2 working days. Return any unused object within 30 days for a full refund.</p></details>
+          <details><summary><span class="sum-t">${icon('shield')}Warranty and repair</span>${icon('chevronDown', 'chev')}</summary><p>Every NOVA object carries a two-year warranty. Parts are replaceable and repairs are handled by MKSTUDIOS.</p></details>
         </div>
       </div>
     </div>
@@ -68,7 +69,7 @@ export function product(id, params) {
     <section class="stories">
       ${p.features.map((f, i) => `<div class="story ${i % 2 ? 'flip' : ''}">
         <div class="story-art" data-reveal="mask">${visual(p, { tone: defaultOpts(p).Finish, angle: i === 1 ? 'tilt' : 'detail', index: i + 1, label: `${p.name} ${f.title}` })}</div>
-        <div class="story-copy" data-reveal><span class="num">0${i + 1}</span><h2>${f.title}</h2><p>${f.text}</p></div>
+        <div class="story-copy" data-reveal><h2>${f.title}</h2><p>${f.text}</p></div>
       </div>`).join('')}
     </section>
     <section class="related"><div class="section-head"><div><p class="eyebrow" data-reveal>You may also like</p><h2 data-lines><span class="line"><span>Related <em>objects.</em></span></span></h2></div></div>

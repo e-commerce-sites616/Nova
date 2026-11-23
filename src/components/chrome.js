@@ -3,6 +3,7 @@ import { visual, catVisual } from '../media.js';
 import { cart } from '../store/cart.js';
 import { wishlist } from '../store/wishlist.js';
 import { $, $$, esc, money, heart, FREE_SHIPPING, trapFocus, lockScroll, toast, safeJSON, safeSave } from '../utils.js';
+import { icon } from './icons.js';
 
 const counts = Object.fromEntries(CATEGORIES.map(c => [c.id, PRODUCTS.filter(p => p.category === c.id).length]));
 
@@ -45,29 +46,30 @@ export function renderChrome() {
         <div class="footer-brand">
           <a class="wordmark" href="#/">NOVA<span class="wordmark-dot">.</span></a>
           <p class="serif">Technology, reimagined.</p>
+<p class="parent-co">NOVA is a MKSTUDIOS brand.</p>
           <form class="newsletter" id="newsletter" novalidate>
             <label for="news-email" class="eyebrow">Join the NOVA list</label>
-            <div class="news-row"><input id="news-email" type="email" placeholder="Email address" autocomplete="email" required><button class="btn small" type="submit">Subscribe</button></div>
+            <div class="news-row"><input id="news-email" type="email" placeholder="Email address" autocomplete="email" required><button class="btn small" type="submit">Subscribe ${icon('arrowRight')}</button></div>
             <p class="form-note" id="news-note" role="status" aria-live="polite">New objects and quiet updates. No noise.</p>
           </form>
         </div>
         <nav class="footer-col" aria-label="Shop"><h4 class="eyebrow">Shop</h4>${CATEGORIES.map(c => `<a href="#/shop?cat=${c.id}">${c.name}</a>`).join('')}<a href="#/shop?sort=new">New arrivals</a></nav>
         <nav class="footer-col" aria-label="Company"><h4 class="eyebrow">NOVA</h4><a href="#/?s=story">Philosophy</a><a href="#/product/aura-one">Flagship</a><a href="#/wishlist">Wishlist</a><a href="#/checkout">Checkout</a></nav>
-        <div class="footer-col"><h4 class="eyebrow">Store</h4><p>NOVA Studio<br>Showroom by appointment<br>Mon–Sat, 10:00–18:00</p><p>Complimentary shipping on orders over ${money(FREE_SHIPPING)}. 30-day returns. 2-year warranty.</p></div>
+        <div class="footer-col"><h4 class="eyebrow">Store</h4><ul class="store-list"><li>${icon('mapPin')}<span>MKSTUDIOS Showroom<br>By appointment</span></li><li>${icon('clock')}<span>Mon–Sat, 10:00–18:00</span></li><li>${icon('truck')}<span>Free shipping over ${money(FREE_SHIPPING)}</span></li><li>${icon('rotate')}<span>30-day returns</span></li><li>${icon('shield')}<span>2-year warranty</span></li></ul></div>
       </div>
-      <div class="footer-bottom"><span>© 2026 NOVA STUDIO · DEMONSTRATION STORE</span><span>NO REAL ORDERS ARE PROCESSED</span><button type="button" class="back-top" data-scroll="top">BACK TO TOP ↑</button></div>
+      <div class="footer-bottom"><span>© 2026 MKSTUDIOS · DEMONSTRATION STORE</span><span>NO REAL ORDERS ARE PROCESSED</span><button type="button" class="back-top" data-scroll="top">BACK TO TOP ${icon('arrowUp')}</button></div>
     </footer>`;
 
   $('#overlays-root').innerHTML = `
     <div class="overlay" id="overlay"></div>
     <aside class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping bag" aria-hidden="true">
-      <div class="drawer-head"><div><p class="eyebrow">Your selection</p><h2>Your bag <span class="count" data-cart-count>0</span></h2></div><button class="drawer-close" type="button" data-close aria-label="Close bag">×</button></div>
+      <div class="drawer-head"><div><p class="eyebrow">Your selection</p><h2>Your bag <span class="count" data-cart-count>0</span></h2></div><button class="drawer-close" type="button" data-close aria-label="Close bag">${icon('x')}</button></div>
       <div class="ship-progress" id="ship-progress"></div>
       <div class="drawer-items" id="cart-items"></div>
       <div class="drawer-foot" id="cart-foot"></div>
     </aside>
     <div class="search-panel" id="search-panel" role="dialog" aria-modal="true" aria-label="Search" aria-hidden="true">
-      <button class="drawer-close" type="button" data-close aria-label="Close search">×</button>
+      <button class="drawer-close" type="button" data-close aria-label="Close search">${icon('x')}</button>
       <p class="eyebrow">What are you looking for?</p>
       <input id="search-input" type="search" placeholder="Search objects" autocomplete="off" aria-label="Search objects">
       <div id="search-results" class="search-results" aria-live="polite"></div>
@@ -128,7 +130,7 @@ function renderCart() {
       <div class="ci-info">
         <h3>${esc(p.name)}</h3><span class="ci-opts">${esc(optsSummary(i.opts))}</span>
         <div class="qty" role="group" aria-label="Quantity for ${esc(p.name)}">
-          <button type="button" data-qty="${esc(i.key)}" data-delta="-1" aria-label="Decrease quantity">−</button><span aria-live="polite">${i.qty}</span><button type="button" data-qty="${esc(i.key)}" data-delta="1" aria-label="Increase quantity">+</button>
+          <button type="button" data-qty="${esc(i.key)}" data-delta="-1" aria-label="Decrease quantity">${icon('minus')}</button><span aria-live="polite">${i.qty}</span><button type="button" data-qty="${esc(i.key)}" data-delta="1" aria-label="Increase quantity">${icon('plus')}</button>
           <button type="button" class="link-btn" data-remove="${esc(i.key)}">Remove</button>
         </div>
       </div>
@@ -136,7 +138,7 @@ function renderCart() {
     </div>`;
   }).join('') : `<div class="drawer-empty"><p class="serif">Your bag is waiting for something good.</p><a class="btn" href="#/shop" data-close-panel>Explore the collection</a></div>`;
   $('#cart-foot').innerHTML = items.length
-    ? `<div class="subtotal"><span>Subtotal</span><strong>${money(subtotal)}</strong></div><p>Shipping and taxes calculated at checkout.</p><a class="btn block" href="#/checkout" data-close-panel>Continue to checkout <span aria-hidden="true">↗</span></a>` : '';
+    ? `<div class="subtotal"><span>Subtotal</span><strong>${money(subtotal)}</strong></div><p>Shipping and taxes calculated at checkout.</p><a class="btn block" href="#/checkout" data-close-panel>Continue to checkout <span aria-hidden="true">${icon('arrowUpRight')}</span></a>` : '';
 }
 
 function bumpBag() {
@@ -156,7 +158,7 @@ function runSearch(q) {
   }
   const found = PRODUCTS.filter(p => `${p.name} ${p.brand} ${p.category} ${p.tagline} ${p.desc}`.toLowerCase().includes(q)).slice(0, 6);
   out.innerHTML = found.length
-    ? found.map(p => `<a class="search-result" href="#/product/${p.id}" data-close-panel><span class="sr-art">${visual(p, { tone: defaultOpts(p).Finish })}</span><span class="sr-name">${esc(p.name)}<small>${esc(p.tagline)}</small></span><strong>${money(p.price)}</strong></a>`).join('') + `<a class="text-link" href="#/shop?q=${encodeURIComponent(q)}" data-close-panel>See all results <span>↗</span></a>`
+    ? found.map(p => `<a class="search-result" href="#/product/${p.id}" data-close-panel><span class="sr-art">${visual(p, { tone: defaultOpts(p).Finish })}</span><span class="sr-name">${esc(p.name)}<small>${esc(p.tagline)}</small></span><strong>${money(p.price)}</strong></a>`).join('') + `<a class="text-link" href="#/shop?q=${encodeURIComponent(q)}" data-close-panel>See all results <span>${icon('arrowUpRight')}</span></a>`
     : `<p class="hint">No objects found for “${esc(q)}”. Try “keyboard” or “audio”.</p>`;
 }
 

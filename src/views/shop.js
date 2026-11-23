@@ -2,6 +2,7 @@ import { PRODUCTS, CATEGORIES } from '../data/products.js';
 import { card } from '../components/card.js';
 import { gsap, EASE, DUR, STAGGER, reducedMotion } from '../motion/index.js';
 import { $, $$, esc } from '../utils.js';
+import { icon, CATEGORY_ICONS } from '../components/icons.js';
 
 const SORTS = { featured: 'Featured', new: 'Newest', 'price-asc': 'Price: low to high', 'price-desc': 'Price: high to low', name: 'Name: A to Z' };
 
@@ -36,7 +37,7 @@ export function shop(params) {
   <section class="shop">
     <div class="shop-bar">
       <div class="chips" role="group" aria-label="Filter by category">
-        ${[{ id: 'all', name: 'All' }, ...CATEGORIES].map(c => `<button type="button" class="chip" data-cat="${c.id}" aria-pressed="${state.cat === c.id}">${c.name}<small>${String(count(c.id)).padStart(2, '0')}</small></button>`).join('')}
+        ${[{ id: 'all', name: 'All' }, ...CATEGORIES].map(c => `<button type="button" class="chip" data-cat="${c.id}" aria-pressed="${state.cat === c.id}">${icon(CATEGORY_ICONS[c.id])}${c.name}<small>${count(c.id)}</small></button>`).join('')}
       </div>
       <div class="shop-tools">
         <label class="field-inline"><span class="sr-only">Search the collection</span><input id="shop-q" type="search" placeholder="Search" value="${esc(state.q)}" autocomplete="off"></label>

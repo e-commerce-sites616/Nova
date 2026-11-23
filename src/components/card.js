@@ -3,6 +3,7 @@ import { categoryName, defaultOpts } from '../data/products.js';
 import { wishlist } from '../store/wishlist.js';
 import { esc, money, heart } from '../utils.js';
 import { TONES } from '../art/products.js';
+import { icon } from './icons.js';
 
 const dots = p => {
   const finishes = p.options.Finish || [];
@@ -27,7 +28,7 @@ export function card(p, { reveal = true } = {}) {
       </a>
       ${badge(p)}
       <button class="wish" type="button" data-wish="${p.id}" aria-pressed="${wished}" aria-label="${wished ? 'Remove from' : 'Add to'} wishlist: ${esc(p.name)}">${heart}</button>
-      <button class="quick" type="button" data-quick="${p.id}"><span>${p.status === 'preorder' ? 'Pre-order' : 'Add to bag'}</span><b aria-hidden="true">+</b></button>
+      <button class="quick" type="button" data-quick="${p.id}"><span>${p.status === 'preorder' ? 'Pre-order' : 'Add to bag'}</span><b aria-hidden="true">${icon('plus')}</b></button>
     </div>
     <a class="card-meta" href="#/product/${p.id}">
       <span class="eyebrow">${categoryName(p.category)}</span>

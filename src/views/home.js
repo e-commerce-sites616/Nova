@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger, EASE, DUR, STAGGER, reducedMotion } from '../motio
 import { $, $$, money, esc } from '../utils.js';
 import { TONES } from '../art/products.js';
 import { PIN_QUERY, keyframes, pinnedScene, videoScrubber, lazyVideo, loopWhenVisible, chapterFade } from '../components/scene.js';
+import { icon, CATEGORY_ICONS } from '../components/icons.js';
 
 const line = t => `<span class="line"><span>${t}</span></span>`;
 const flagship = byId('aura-one');
@@ -33,26 +34,26 @@ export function home() {
   <section class="hero" id="hero">
     <div class="hero-bg" data-hero-bg></div><div class="hero-grain"></div>
     <div class="hero-copy">
-      <p class="eyebrow" data-hero>The Aura One · Edition 001</p>
+      <p class="eyebrow" data-hero>The Aura One · Flagship</p>
       <h1 class="hero-title" data-hero-title>${line('Make room')}${line('for <em>better.</em>')}</h1>
       <p class="hero-sub" data-hero>Considered technology. Exceptional by design.<br>Meet the objects shaping what comes next.</p>
-      <div class="hero-cta" data-hero><a class="btn" href="#/product/aura-one">Discover Aura One</a><a class="text-link" href="#/shop">Explore the collection <span>↗</span></a></div>
+      <div class="hero-cta" data-hero><a class="btn" href="#/product/aura-one">Discover Aura One ${icon('arrowRight')}</a><a class="text-link" href="#/shop">Explore the collection <span>${icon('arrowUpRight')}</span></a></div>
     </div>
     <div class="hero-stage" data-hero-stage>
       <div class="hero-ring r1"></div><div class="hero-ring r2"></div>
       <div class="hero-art" data-parallax="0.06">${visual(flagship, { tone: 'graphite', label: 'Aura One wireless headphones', eager: true, priority: true })}</div>
       <div class="hero-swatches" role="radiogroup" aria-label="Aura One finish" data-hero>${flagship.options.Finish.map((f, i) => `<button type="button" class="swatch mini" role="radio" aria-checked="${i === 0}" data-hero-finish="${f}" aria-label="${TONES[f].name}" style="--c:${TONES[f].body}"></button>`).join('')}</div>
-      <div class="hero-label"><span id="hero-name">01 / Aura One — ${TONES.graphite.name}</span><span>Form meets function</span></div>
+      <div class="hero-label"><span id="hero-name">Aura One — ${TONES.graphite.name}</span><span>Form meets function</span></div>
     </div>
     <button class="hero-scroll" type="button" data-scroll="#intro" data-hero><span>Scroll to discover</span><i class="scroll-line"></i></button>
-    <div class="hero-index" data-hero>N° 001 — 2026</div>
+    <div class="hero-index" data-hero>Collection 2026</div>
   </section>
 
   <section class="intro" id="intro">
     <p class="eyebrow">A different point of view</p>
     <div class="intro-layout">
       <h2 data-lines>${line('Technology should feel')}${line('as good as it <em>works.</em>')}</h2>
-      <p class="intro-note" data-reveal>We look beyond the spec sheet. NOVA brings together thoughtful objects, purposeful engineering and details worth noticing.</p>
+      <p class="intro-note" data-reveal>We look beyond the spec sheet. NOVA, a MKSTUDIOS brand, brings together thoughtful objects, purposeful engineering and details worth noticing.</p>
     </div>
   </section>
 
@@ -63,27 +64,27 @@ export function home() {
       <div class="scrub-copy">
         <p class="eyebrow">Aura Buds · In motion</p>
         <div class="scrub-chapters">
-          ${CASE_CHAPTERS.map(([t, d], i) => `<article class="scrub-chapter"><span class="num">0${i + 1} / 03</span><h2>${t}</h2><p>${d}</p></article>`).join('')}
+          ${CASE_CHAPTERS.map(([t, d], i) => `<article class="scrub-chapter"><h2>${t}</h2><p>${d}</p></article>`).join('')}
         </div>
-        <a class="btn" href="#/product/aura-buds">Discover Aura Buds — ${money(buds.price)}</a>
+        <a class="btn" href="#/product/aura-buds">Discover Aura Buds — ${money(buds.price)} ${icon('arrowRight')}</a>
         <div class="scrub-progress" aria-hidden="true"><span></span></div>
       </div>
     </div>
   </section>
 
   <section class="section featured" id="featured">
-    <div class="section-head"><div><p class="eyebrow" data-reveal>The featured collection</p><h2 data-lines>${line('Quietly')}${line('<em>extraordinary.</em>')}</h2></div><a class="text-link" href="#/shop" data-reveal>View all objects <span>↗</span></a></div>
+    <div class="section-head"><div><p class="eyebrow" data-reveal>The featured collection</p><h2 data-lines>${line('Quietly')}${line('<em>extraordinary.</em>')}</h2></div><a class="text-link" href="#/shop" data-reveal>View all objects <span>${icon('arrowUpRight')}</span></a></div>
     <div class="editorial">
       ${featured.map((p, i) => `<a class="ed ed-${i + 1}" href="#/product/${p.id}">
         <span class="ed-art" data-reveal="mask">${visual(p, { tone: defaultOpts(p).Finish, angle: 'front', label: p.name })}</span>
-        <span class="ed-meta" data-reveal><small>0${i + 1} — ${categoryName(p.category)}</small><b>${esc(p.name)}</b><em>${esc(p.tagline)}</em><span class="ed-price">${money(p.price)} <i>↗</i></span></span>
+        <span class="ed-meta" data-reveal><small>${categoryName(p.category)}</small><b>${esc(p.name)}</b><em>${esc(p.tagline)}</em><span class="ed-price">${money(p.price)} <i>${icon('arrowUpRight')}</i></span></span>
       </a>`).join('')}
     </div>
   </section>
 
   <section class="section arrivals" id="arrivals">
     <div class="section-head"><div><p class="eyebrow" data-reveal>New arrivals</p><h2 data-lines>${line('Just <em>landed.</em>')}</h2></div>
-      <div class="track-ctrl" data-reveal><button type="button" data-track="-1" aria-label="Previous products">←</button><button type="button" data-track="1" aria-label="Next products">→</button></div></div>
+      <div class="track-ctrl" data-reveal><button type="button" data-track="-1" aria-label="Previous products">${icon('arrowLeft')}</button><button type="button" data-track="1" aria-label="Next products">${icon('arrowRight')}</button></div></div>
     <div class="track" id="arrivals-track" tabindex="0" aria-label="New arrivals, scrollable">${arrivals.map(p => card(p, { reveal: false })).join('')}</div>
   </section>
 
@@ -91,7 +92,7 @@ export function home() {
     <div class="colours-sticky" data-sticky>
       <div class="colours-head">
         <div><p class="eyebrow">Aura Buds · Finishes</p><h2>Choose your <em>finish.</em></h2></div>
-        <a class="text-link" id="colour-link" href="#/product/aura-buds">Shop Aura Buds <span>↗</span></a>
+        <a class="text-link" id="colour-link" href="#/product/aura-buds">Shop Aura Buds <span>${icon('arrowUpRight')}</span></a>
       </div>
       <div class="colours-stage"><video class="colours-video" data-src="/video/buds-colours.mp4" poster="/video/buds-colours.jpg" data-duration="5.77" muted playsinline loop preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true"></video></div>
       <div class="colours-foot">
@@ -104,9 +105,9 @@ export function home() {
   <section class="experience" id="experience">
     <div class="exp-head"><p class="eyebrow" data-reveal>The NOVA experience</p><h2 data-lines>${line('Made for people who')}${line('notice the <em>details.</em>')}</h2></div>
     <div class="pillars" data-stagger>
-      <article data-reveal><span class="num">01</span><h3>Precision</h3><p>Aluminium milled to tight tolerances and tuned drivers measured against a reference. Specifications are the beginning of the conversation.</p></article>
-      <article data-reveal><span class="num">02</span><h3>Restraint</h3><p>We remove until only what matters remains. Nothing decorative, nothing loud: objects that sit quietly and perform beautifully.</p></article>
-      <article data-reveal><span class="num">03</span><h3>Longevity</h3><p>Repairable construction, replaceable parts and a two-year warranty. We design products to be kept, not replaced.</p></article>
+      <article data-reveal><span class="pillar-icon">${icon('target')}</span><h3>Precision</h3><p>Aluminium milled to tight tolerances and tuned drivers measured against a reference. Specifications are the beginning of the conversation.</p></article>
+      <article data-reveal><span class="pillar-icon">${icon('circleMinus')}</span><h3>Restraint</h3><p>We remove until only what matters remains. Nothing decorative, nothing loud: objects that sit quietly and perform beautifully.</p></article>
+      <article data-reveal><span class="pillar-icon">${icon('infinity')}</span><h3>Longevity</h3><p>Repairable construction, replaceable parts and a two-year warranty. We design products to be kept, not replaced.</p></article>
     </div>
     <dl class="stats" data-stagger><div data-reveal><dt>2 yr</dt><dd>Warranty on every object</dd></div><div data-reveal><dt>30 day</dt><dd>Effortless returns</dd></div><div data-reveal><dt>1–2 day</dt><dd>Dispatch on stocked items</dd></div></dl>
   </section>
@@ -117,7 +118,7 @@ export function home() {
         <p class="eyebrow">Flagship spotlight</p>
         <h2>Aura <em>One.</em></h2>
         <div class="spot-panels">
-          ${flagship.features.map((f, i) => `<article class="spot-panel"><span class="num">0${i + 1} / 03</span><h3>${f.title}</h3><p>${f.text}</p></article>`).join('')}
+          ${flagship.features.map((f, i) => `<article class="spot-panel"><h3>${f.title}</h3><p>${f.text}</p></article>`).join('')}
         </div>
         <a class="btn" href="#/product/aura-one">Explore Aura One — ${money(flagship.price)}</a>
         <div class="spot-progress" aria-hidden="true"><span></span></div>
@@ -130,7 +131,7 @@ export function home() {
     <div class="section-head"><div><p class="eyebrow" data-reveal>Explore categories</p><h2 data-lines>${line('Find your')}${line('<em>frequency.</em>')}</h2></div></div>
     <div class="mosaic" data-stagger>
       ${tiles.map((id, i) => { const c = CATEGORIES.find(x => x.id === id); const n = PRODUCTS.filter(p => p.category === id).length;
-        return `<a class="tile t${i + 1}" href="#/shop?cat=${id}" data-reveal><span class="tile-art">${catVisual(id, 'front')}</span><span class="tile-text"><small>${String(n).padStart(2, '0')} objects</small><b>${c.name}</b><em>${c.blurb}</em></span><i class="tile-arrow" aria-hidden="true">↗</i></a>`; }).join('')}
+        return `<a class="tile t${i + 1}" href="#/shop?cat=${id}" data-reveal><span class="tile-art">${catVisual(id, 'front')}</span><span class="tile-text"><small>${icon(CATEGORY_ICONS[id])}${n} objects</small><b>${c.name}</b><em>${c.blurb}</em></span><i class="tile-arrow" aria-hidden="true">${icon('arrowUpRight')}</i></a>`; }).join('')}
     </div>
   </section>
 
@@ -149,7 +150,7 @@ export function home() {
     <div class="statement-shade"></div>
     <h2 data-lines>${line('Technology,')}${line('<em>reimagined.</em>')}</h2>
     <p data-reveal>Good design doesn’t ask for attention. It earns it, through the details you notice and the ones you simply feel.</p>
-    <a class="btn" href="#/shop" data-reveal>Enter the collection</a>
+    <a class="btn" href="#/shop" data-reveal>Enter the collection ${icon('arrowRight')}</a>
     <button type="button" class="sound-toggle" id="statement-sound" aria-pressed="false" aria-label="Turn sound on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.4L12 6v12l-4.6-3.5H4z"/><path class="on" d="M15.4 9.2a4 4 0 0 1 0 5.6M18 6.6a7.6 7.6 0 0 1 0 10.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="off" d="m15.5 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Sound off</span></button>
   </section>`;
 
@@ -191,7 +192,7 @@ export function home() {
       const f = b.dataset.heroFinish;
       $$('[data-hero-finish]', root).forEach(x => x.setAttribute('aria-checked', String(x === b)));
       heroArt.innerHTML = visual(flagship, { tone: f, label: `Aura One wireless headphones in ${TONES[f].name}`, eager: true });
-      $('#hero-name', root).textContent = `01 / Aura One — ${TONES[f].name}`;
+      $('#hero-name', root).textContent = `Aura One — ${TONES[f].name}`;
       if (!reduced) gsap.fromTo(heroArt.firstChild, { opacity: 0, scale: 1.03 }, { opacity: 1, scale: 1, duration: DUR.base, ease: EASE.out, clearProps: 'transform,opacity' });
     }));
 
@@ -269,7 +270,7 @@ export function home() {
     const link = $('#colour-link', colours);
     const setFinish = f => {
       chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.finish === f)));
-      link.innerHTML = f ? `Shop Aura Buds in ${TONES[f].name} <span>↗</span>` : 'Shop Aura Buds <span>↗</span>';
+      link.innerHTML = f ? `Shop Aura Buds in ${TONES[f].name} <span>${icon('arrowUpRight')}</span>` : `Shop Aura Buds <span>${icon('arrowUpRight')}</span>`;
       link.setAttribute('href', f ? `#/product/aura-buds?finish=${f}` : '#/product/aura-buds');
     };
     if (pinned) {
