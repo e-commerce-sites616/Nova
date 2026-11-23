@@ -34,6 +34,20 @@ export function pinnedScene(section, onFrame) {
   return () => { cancelAnimationFrame(raf); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); };
 }
 
+/** Gives a <video data-src> its source only when it is about to scroll into view (saves megabytes on first load). */
+export function lazyVideo(video, { margin = '120% 0px' } = {}) {
+  const src = video.dataset.src;
+  if (!src || video.getAttribute('src')) return () => {};
+  const io = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    video.src = src;
+    video.load();
+  }, { rootMargin: margin });
+  io.observe(video);
+  return () => io.disconnect();
+}
+
 /** Smoothly drives video.currentTime toward a target time. */
 export function videoScrubber(video) {
   let target = 0, cur = 0, raf = 0, dur = Number(video.dataset.duration) || 0;
@@ -52,6 +66,7 @@ export function videoScrubber(video) {
     else { unlocked = true; video.pause(); }
   };
   unlock();
+  video.addEventListener('loadeddata', unlock, { once: true });
   const onTouch = () => { unlock(); };
   window.addEventListener('touchstart', onTouch, { passive: true, once: true });
   window.addEventListener('pointerdown', onTouch, { passive: true, once: true });

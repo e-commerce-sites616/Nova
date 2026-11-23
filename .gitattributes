@@ -1,0 +1,8 @@
+# Normalise line endings (avoids the "LF will be replaced by CRLF" warnings on Windows) and never diff binaries.
+* text=auto eol=lf
+*.mp4 binary
+*.webp binary
+*.jpg binary
+*.png binary
+*.zip binary
+*.woff2 binary

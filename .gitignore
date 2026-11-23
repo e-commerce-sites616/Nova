@@ -4,7 +4,10 @@ dist/
 .env
 .env.*
 !.env.example
+__pycache__/
 
+# Raw source media is kept on your machine only. The site uses the processed files in
+# public/video/ and src/assets/products/ (regenerate with npm run videos:prepare / photos:prepare).
 videos/
 *.zip
 images/*.mp4

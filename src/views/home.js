@@ -4,7 +4,7 @@ import { card } from '../components/card.js';
 import { gsap, ScrollTrigger, EASE, DUR, STAGGER, reducedMotion } from '../motion/index.js';
 import { $, $$, money, esc } from '../utils.js';
 import { TONES } from '../art/products.js';
-import { PIN_QUERY, clamp, keyframes, pinnedScene, videoScrubber, loopWhenVisible, chapterFade } from '../components/scene.js';
+import { PIN_QUERY, keyframes, pinnedScene, videoScrubber, lazyVideo, loopWhenVisible, chapterFade } from '../components/scene.js';
 
 const line = t => `<span class="line"><span>${t}</span></span>`;
 const flagship = byId('aura-one');
@@ -40,7 +40,7 @@ export function home() {
     </div>
     <div class="hero-stage" data-hero-stage>
       <div class="hero-ring r1"></div><div class="hero-ring r2"></div>
-      <div class="hero-art" data-parallax="0.06">${visual(flagship, { tone: 'graphite', label: 'Aura One wireless headphones', eager: true })}</div>
+      <div class="hero-art" data-parallax="0.06">${visual(flagship, { tone: 'graphite', label: 'Aura One wireless headphones', eager: true, priority: true })}</div>
       <div class="hero-swatches" role="radiogroup" aria-label="Aura One finish" data-hero>${flagship.options.Finish.map((f, i) => `<button type="button" class="swatch mini" role="radio" aria-checked="${i === 0}" data-hero-finish="${f}" aria-label="${TONES[f].name}" style="--c:${TONES[f].body}"></button>`).join('')}</div>
       <div class="hero-label"><span id="hero-name">01 / Aura One — ${TONES.graphite.name}</span><span>Form meets function</span></div>
     </div>
@@ -58,7 +58,7 @@ export function home() {
 
   <section class="scrub" id="reveal" aria-label="Aura Buds in motion">
     <div class="scrub-sticky" data-sticky>
-      <video class="scrub-video" src="/video/buds-case.mp4" poster="/video/buds-case.jpg" data-duration="5.1" muted playsinline loop preload="auto" disablepictureinpicture tabindex="-1" aria-hidden="true"></video>
+      <video class="scrub-video" data-src="/video/buds-case.mp4" poster="/video/buds-case.jpg" data-duration="5.1" muted playsinline loop preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true"></video>
       <div class="scrub-shade"></div>
       <div class="scrub-copy">
         <p class="eyebrow">Aura Buds · In motion</p>
@@ -93,7 +93,7 @@ export function home() {
         <div><p class="eyebrow">Aura Buds · Finishes</p><h2>Choose your <em>finish.</em></h2></div>
         <a class="text-link" id="colour-link" href="#/product/aura-buds">Shop Aura Buds <span>↗</span></a>
       </div>
-      <div class="colours-stage"><video class="colours-video" src="/video/buds-colours.mp4" poster="/video/buds-colours.jpg" data-duration="5.77" muted playsinline loop preload="auto" disablepictureinpicture tabindex="-1" aria-hidden="true"></video></div>
+      <div class="colours-stage"><video class="colours-video" data-src="/video/buds-colours.mp4" poster="/video/buds-colours.jpg" data-duration="5.77" muted playsinline loop preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true"></video></div>
       <div class="colours-foot">
         <div class="colour-chips" role="group" aria-label="Aura Buds finishes">${FINISH_ORDER.map(f => `<button type="button" class="colour-chip" data-finish="${f}" aria-pressed="false" style="--c:${TONES[f].body}"><i></i>${TONES[f].name}</button>`).join('')}</div>
         <div class="scrub-progress" aria-hidden="true"><span></span></div>
@@ -246,6 +246,7 @@ export function home() {
     // 1. the case film: scroll scrubs the video, three chapters fade over it
     const reveal = $('#reveal', root);
     const revealVideo = $('.scrub-video', reveal);
+    cleanups.push(lazyVideo(revealVideo));
     if (pinned) {
       const scrub = videoScrubber(revealVideo);
       const chapters = $$('.scrub-chapter', reveal);
@@ -263,6 +264,7 @@ export function home() {
     // 2. the colours film: holds on each finish, chips stay in sync and are clickable
     const colours = $('#colours', root);
     const colourVideo = $('.colours-video', colours);
+    cleanups.push(lazyVideo(colourVideo));
     const chips = $$('.colour-chip', colours);
     const link = $('#colour-link', colours);
     const setFinish = f => {
@@ -275,7 +277,7 @@ export function home() {
       const bar = $('.scrub-progress span', colours);
       let active;
       const stop = pinnedScene(colours, p => {
-        scrub.seek(keyframes(COLOUR_TIME, p) / 5.77 * scrub.duration);
+        scrub.seek(Math.min(keyframes(COLOUR_TIME, p), Math.max(0, scrub.duration - 0.05)));
         const f = FINISH_ORDER.find(k => p >= COLOUR_RANGES[k][0] && p < COLOUR_RANGES[k][1]) || null;
         if (f !== active) { active = f; setFinish(f); }
         bar.style.transform = `scaleX(${p})`;
